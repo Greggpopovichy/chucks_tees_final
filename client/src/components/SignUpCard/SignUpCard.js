@@ -1,37 +1,68 @@
-import React from "react";
+import React, {Component} from 'react';
+import axios from 'axios';
+import {Link} from 'react-router-dom';
 import "./SignUpCard.css";
 
-const SignUpCard = () => (
+class SignUpCard extends Component {
+    constructor() {
+        super();
+
+        this.state = {};
+    }
+
+    getValues = (event) => {
+        this.setState({[event.target.name]: event.target.value});
+    };
+
+
+    sendData = (event) => {
+        event.preventDefault();
+
+        axios.post('/signup', this.state)
+            .then((data) => {
+                localStorage.setItem('isAuthenticated', JSON.stringify(true));
+                this.props.history.push('/dashboard');
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+    render(){
+
+        return(
             <div className="card center-align z-depth-4" id="signUpCard">
                 <h4 className="center-align black-text card-title">Sign Up</h4>
-                <form action="/" method="post">
-                    <div className="form-group" id="firstName">
-                        <input className="form-control validate" id="fName-input" name="user_first_name" type="text" placeholder="First Name" required/>
-                    </div>
+                    <form action="/" method="post">
+                        <div className="form-group" id="firstName">
+                            <input className="form-control validate" id="fName-input" name="user_first_name" type="text" placeholder="First Name" required/>
+                        </div>
 
-                    <div className="form-group" id="lastName">
-                        <input className="form-control validate" id="lName-input" name="user_last_name" type="text" placeholder="Last Name" required/>
-                    </div>
+                        <div className="form-group" id="lastName">
+                            <input className="form-control validate" id="lName-input" name="user_last_name" type="text" placeholder="Last Name" required/>
+                        </div>
 
-                    <div className="form-group" id="number">
-                        <input className="form-control validate" id="number-input" name="user_number" type="number" placeholder="Phone Number"/>
-                    </div>
+                        <div className="form-group" id="number">
+                            <input className="form-control validate" id="number-input" name="user_number" type="number" placeholder="Phone Number"/>
+                        </div>
 
-                    <div className="form-group" id="email">
-                        <input className="form-control validate" id="email-input" name="user_email" type="email" placeholder="Email" required/>
-                    </div>
+                        <div className="form-group" id="email">
+                            <input className="form-control validate" id="email-input" name="user_email" type="email" placeholder="Email" required/>
+                        </div>
 
-                    <div className="form-group" id="username">
-                        <input type="text" className="form-control" id="usernameinput" name="username" placeholder="Username" required/>
-                    </div>
+                        <div className="form-group" id="username">
+                            <input type="text" className="form-control" id="usernameinput" name="username" placeholder="Username" onChange={this.getValues} required/>
+                        </div>
 
-                    <div className="form-group" id="password">
-                        <input type="password" className="form-control" id="passwordinput" name="password" placeholder="Password" required/>
-                    </div>
+                        <div className="form-group" id="password">
+                            <input type="password" className="form-control" id="passwordinput" name="password" placeholder="Password" onChange={this.getValues} required/>
+                        </div>
 
-                    <button type="submit" className="btn waves-effect waves-light red" id="signupSubmit">Signup</button>
-                </form>
+                        <button type="submit" className="btn waves-effect waves-light red" id="signupSubmit" onClick={this.sendData}>Signup</button>
+
+                    </form>
             </div>
-);
+        );
+}
+}
 
 export default SignUpCard;
