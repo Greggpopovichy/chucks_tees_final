@@ -1,0 +1,11 @@
+.card-title{
+    text-align: center;
+}
+
+.thumb{
+    display: inline-block;
+}
+
+ul .color-list{
+    padding-left: 10%;
+}

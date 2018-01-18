@@ -1,0 +1,11 @@
+.productBtn {
+    background-color: white;
+    color: black;
+    margin-left:5px;
+    margin-right: 5px;
+}
+
+.productBtn:hover{
+    color: white;
+    background-color: red;
+}
